@@ -1,0 +1,30 @@
+{
+    "plugin": {
+        "description": "Controls a Pi-hole: turn blocking on and off and show its statistics on a key.",
+        "requirements": "A reachable Pi-hole (version 6 API) plus its address and app password. Those two are set once for the whole plugin in any of its actions' settings, not per action - so they cannot be filled in through the action settings json."
+    },
+    "actions": {
+        "ToggleState": {
+            "description": "Turns Pi-hole blocking off if it is on, and on again if it is off. The key shows the current state by itself, including whether the Pi-hole can be reached. Takes no settings of its own.",
+            "settings": {}
+        },
+        "Disable": {
+            "description": "Turns Pi-hole blocking off, optionally only for a while. Use it when a site has to be loaded once without blocking. The pause length is a plugin wide setting, not part of this action's settings json.",
+            "settings": {}
+        },
+        "Info": {
+            "description": "Shows Pi-hole statistics on the key - blocked queries, total queries, percentage. It updates itself. Pressing the key disables blocking.",
+            "settings": {
+                "labels": {
+                    "type": "object",
+                    "description": "The three label rows of the key, as {\"top\": ..., \"center\": ..., \"bottom\": ...}. Text is shown as it is; placeholders in braces are replaced with values from the Pi-hole summary, with nested keys joined by underscores - for instance {queries_total}, {queries_blocked}, {queries_percent_blocked}, {gravity_domains_being_blocked}.",
+                    "example": {
+                        "top": "Blocked",
+                        "center": "{queries_blocked}",
+                        "bottom": "{queries_percent_blocked}%"
+                    }
+                }
+            }
+        }
+    }
+}
